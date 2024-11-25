@@ -1,0 +1,22 @@
+const express = require('express')
+const ProprietarioController = require('../controllers/ProprietarioController')
+const ProdutoController = require('../controllers/ProdutoController')
+
+const router = express.Router()
+router.get('/proprietario/:id', ProprietarioController.buscaProprietario)
+router.get('/proprietario', ProprietarioController.buscaNomeProprietario)
+router.get('/proprietarios', ProprietarioController.listarProprietarios)
+router.get('/maiorProdutoProprietario', ProprietarioController.produtoProprietario)
+router.post('/proprietario', ProprietarioController.criarProprietarios)
+router.delete('/proprietario/:id', ProprietarioController.deletarProprietario)
+router.put('/proprietario/:id', ProprietarioController.atualizarProprietario)
+router.get('/produto/:id', ProdutoController.buscaProduto)
+router.get('/produtos', ProdutoController.listarProdutos)
+router.get('/maiorQuantProduto', ProdutoController.maiorQuant)
+router.get('/maiorValorProduto', ProdutoController.maiorValor)
+router.get('/maiorValorTotal', ProdutoController.maiorValorTotal)
+router.post('/produto', ProdutoController.criarProdutos)
+router.delete('/produto/:id', ProdutoController.deletarProduto)
+router.put('/produto/:id', ProdutoController.atualizarProduto)
+
+module.exports = router
