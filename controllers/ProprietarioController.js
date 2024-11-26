@@ -4,11 +4,12 @@ const prisma = new PrismaClient();
 module.exports = {
     async listarProprietarios(req,res){
         try {
-            const proprietarios = await prisma.proprietario.findMany();
+            const proprietarios = await prisma.proprietarios.findMany();
             res.status(200).json(proprietarios);
 
         }catch(error){
-            res.status(500).json({ error: "Erro ao listar os proprietários"})
+            res.status(500).json({ error_message: "Erro ao listar os proprietários!",error:error})
+            console.log(error)
         }
     },
 
@@ -61,7 +62,7 @@ module.exports = {
                 nome, email, endereco  
             } = req.body;
 
-            const novoProprietario = await prisma.proprietario.create({
+            const novoProprietario = await prisma.proprietarios.create({
                 data: {
                     nome, email, endereco
             }})
