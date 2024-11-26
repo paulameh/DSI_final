@@ -16,7 +16,7 @@ module.exports = {
     async buscaProprietario(req,res){
         try {
             const {id} = req.params;
-            const proprietario = await prisma.proprietario.findUnique({
+            const proprietario = await prisma.proprietarios.findUnique({
                 where: { id: Number(id) }
             });
             if (!proprietario){
@@ -37,7 +37,7 @@ module.exports = {
             const {name} = req.query;
             console.log(name)
 
-            const proprietario = await prisma.proprietario.findMany({
+            const proprietario = await prisma.proprietarios.findMany({
                 where:{
                     nome: { contains: name }
                 }
@@ -79,7 +79,7 @@ module.exports = {
         try{
             const { id } = req.params;
             const { nome, email, endereco } = req.body;
-            const proprietario = await prisma.proprietario.update({
+            const proprietario = await prisma.proprietarios.update({
                 where: { id: Number(id) },
                 data: { 
                     nome, email, endereco
@@ -111,7 +111,7 @@ module.exports = {
 
     async produtoProprietario(req,res){
         try {
-            const proprietario = await prisma.proprietario.findFirst(
+            const proprietario = await prisma.proprietarios.findFirst(
                 {
                     include: {
                         _count: {
@@ -125,6 +125,7 @@ module.exports = {
 
         }catch(error){
             res.status(500).json({ error: "Erro ao encontrar o propritário com mais produtos." });
+            console.log(error)
         }
     }
     

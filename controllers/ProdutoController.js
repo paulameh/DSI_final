@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 module.exports = {
     async listarProdutos(req,res){
         try {
-            const produtos = await prisma.produto.findMany();
+            const produtos = await prisma.produtos.findMany();
             res.status(200).json(produtos);
 
         }catch(error){
@@ -15,7 +15,7 @@ module.exports = {
     async buscaProduto(req,res){
         try {
             const {id} = req.params;
-            const produto = await prisma.produto.findUnique({
+            const produto = await prisma.produtos.findUnique({
                 where: { id: Number(id) }
             });
             if (!produto){
@@ -35,19 +35,19 @@ module.exports = {
     async criarProdutos(req,res){
         try {
             const {
-                descricao, quantidade, valor, proprietario_ID  
+                descricao, quantidade, valor, proprietario_id  
             } = req.body;
 
-            const novoProduto = await prisma.produto.create({
+            const novoProduto = await prisma.produtos.create({
                 data: {
-                    descricao, quantidade, valor, proprietario_ID
+                    descricao, quantidade, valor, proprietario_id
             }})
 
             res.status(201).json(novoProduto);
 
         }catch(error){
             res.status(500).json({ error: "Erro ao criar o produto" });
-
+            console.log(error)
         }
     },
 
@@ -55,7 +55,7 @@ module.exports = {
         try{
             const { id } = req.params;
             const { descricao, quantidade, valor, proprietario_ID } = req.body;
-            const produto = await prisma.produto.update({
+            const produto = await prisma.produtos.update({
                 where: { id: Number(id) },
                 data: { 
                     descricao, quantidade, valor, proprietario_ID
@@ -72,7 +72,7 @@ module.exports = {
         try {
             //const id = req.params.id;
             const { id } = req.params;
-            await prisma.produto.delete(
+            await prisma.produtos.delete(
                 {
                     where: { id: Number(id) }
                 }
@@ -86,7 +86,7 @@ module.exports = {
 
     async maiorValor(req,res){
         try {
-            const maior = await prisma.produto.findFirst({
+            const maior = await prisma.produtos.findFirst({
                 orderBy: { valor: 'desc', },
             })
 
@@ -98,7 +98,7 @@ module.exports = {
     
     async maiorQuant(req,res){
         try {
-            const maior = await prisma.produto.findFirst({
+            const maior = await prisma.produtos.findFirst({
                 orderBy: { quantidade: 'desc', },
             })
 
@@ -110,7 +110,7 @@ module.exports = {
     
     async maiorValorTotal(req,res){
         try {
-            const listaProdutos = await prisma.produto.findMany({
+            const listaProdutos = await prisma.produtos.findMany({
                 select: {
                     id: true,
                     valor: true,
@@ -136,7 +136,7 @@ module.exports = {
 
             console.log(idDoMaior);
 
-            const produto = await prisma.produto.findUnique({
+            const produto = await prisma.produtos.findUnique({
                 where: {
                     id: idDoMaior,
                 },

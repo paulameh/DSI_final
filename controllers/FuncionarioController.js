@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 module.exports = {
     async listarFuncionarios(req,res){
         try {
-            const funcionarios = await prisma.funcionario.findMany();
+            const funcionarios = await prisma.funcionarios.findMany();
             res.status(200).json(funcionarios);
 
         }catch(error){
@@ -15,7 +15,7 @@ module.exports = {
     async buscaFuncionario(req,res){
         try {
             const {id} = req.params;
-            const funcionario = await prisma.funcionario.findUnique({
+            const funcionario = await prisma.funcionarios.findUnique({
                 where: { id: Number(id) }
             });
             if (!funcionario){
@@ -38,7 +38,7 @@ module.exports = {
                 matricula, nome, email, salario_bruto  
             } = req.body;
 
-            const novoFuncionario = await prisma.funcionario.create({
+            const novoFuncionario = await prisma.funcionarios.create({
                 data: {
                     matricula, nome, email, salario_bruto
             }})
@@ -56,7 +56,7 @@ module.exports = {
             const { id } = req.params;
             //const matricula = req.body.matricula;
             const { matricula, nome, email, salario_bruto } = req.body;
-            const funcionario = await prisma.funcionario.update({
+            const funcionario = await prisma.funcionarios.update({
                 where: { id: Number(id) },
                 data: { 
                     matricula, 
@@ -77,7 +77,7 @@ module.exports = {
         try {
             //const id = req.params.id;
             const { id } = req.params;
-            await prisma.funcionario.delete(
+            await prisma.funcionarios.delete(
 
                 {
                     where: { id: Number(id) }
